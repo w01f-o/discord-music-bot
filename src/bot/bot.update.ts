@@ -16,6 +16,10 @@ export class BotUpdate {
   @Once('ready')
   public async onReady(@Context() [client]: ContextOf<'ready'>) {
     this.logger.log(`Bot logged in as ${client.user.tag}!`);
+    // this.botInfo = {
+    //   name: client.user.displayName,
+    //   iconURL: client.user.displayAvatarURL(),
+    // };
 
     const player: Player = new Player(client, {
       skipFFmpeg: false,

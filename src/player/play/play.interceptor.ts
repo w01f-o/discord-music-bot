@@ -11,7 +11,13 @@ export class LocalTrackAutocompleteInterceptor extends AutocompleteInterceptor {
 
   public transformOptions(interaction: AutocompleteInteraction) {
     const localTracks = this.trackService.findAll();
+    const focused = interaction.options.getFocused(true);
+    const focusedValue = focused.value.toLowerCase().trim();
 
-    return interaction.respond(localTracks.slice(0, 25));
+    const choices: { name: string; value: string }[] = localTracks
+      .filter((track) => track.name.toLowerCase().trim().includes(focusedValue))
+      .map((track) => ({ name: track.name, value: track.value }));
+
+    return interaction.respond(choices.slice(0, 25));
   }
 }

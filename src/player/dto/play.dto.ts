@@ -1,5 +1,4 @@
 import { StringOption } from 'necord';
-import { TrackService } from '../../track/track.service';
 
 export class PlayUrlDto {
   @StringOption({
@@ -11,8 +10,6 @@ export class PlayUrlDto {
 }
 
 export class PlayLocalDto {
-  constructor(private trackService: TrackService = new TrackService()) {}
-
   @StringOption({
     name: 'track',
     description: 'Трек',
