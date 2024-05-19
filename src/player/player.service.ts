@@ -11,13 +11,10 @@ import {
   useMainPlayer,
   useQueue,
 } from 'discord-player';
-import { EmbedService } from '../embed/embed.service';
-import { CommandResponseDto } from './dto/commandResponseDto';
+import { CommandResponseDto } from './dto/commandResponse.dto';
 
 @Injectable()
 export class PlayerService {
-  constructor(private readonly embedService: EmbedService) {}
-
   public async play(
     interaction: ChatInputCommandInteraction,
     requestedTrack: string,

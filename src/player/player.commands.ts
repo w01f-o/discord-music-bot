@@ -5,7 +5,7 @@ import { PlayerService } from './player.service';
 import { LoopDto } from './dto/loop.dto';
 import { EmbedService } from '../embed/embed.service';
 import { ChatInputCommandInteraction } from 'discord.js';
-import { CommandResponseDto } from './dto/commandResponseDto';
+import { CommandResponseDto } from './dto/commandResponse.dto';
 
 @Injectable()
 export class PlayerCommands {
