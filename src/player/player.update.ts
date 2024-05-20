@@ -36,7 +36,7 @@ export class PlayerUpdate {
       await textChannel.send({
         embeds: [this.embedService.info('Моя работа окончена, я пошёл!')],
       });
-      this.logger.log('Бот вышел');
+      this.logger.log(`Бот вышел из канала`);
     });
 
     this.player.events.on('emptyChannel', async (queue) => {
@@ -49,7 +49,7 @@ export class PlayerUpdate {
           ),
         ],
       });
-      this.logger.log('Бот вышел');
+      this.logger.log('Бот вышел по причине не активности');
     });
 
     this.player.events.on('emptyQueue', async (queue) => {
@@ -58,7 +58,7 @@ export class PlayerUpdate {
       await textChannel.send({
         embeds: [this.embedService.info('Очередь пуста')],
       });
-      this.logger.log('Очередь пуста');
+      this.logger.log('Очередь опустела');
     });
   }
 }

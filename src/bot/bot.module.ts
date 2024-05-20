@@ -7,6 +7,7 @@ import { getBotConfig } from '../config/bot.config';
 import { PlayerUpdate } from '../player/player.update';
 import { EmbedService } from '../embed/embed.service';
 import { TrackService } from '../track/track.service';
+import { DatabaseService } from '../database/database.service';
 
 @Module({
   imports: [
@@ -19,6 +20,12 @@ import { TrackService } from '../track/track.service';
       development: [getBotConfig().discord_dev_guild],
     }),
   ],
-  providers: [BotUpdate, PlayerUpdate, EmbedService, TrackService],
+  providers: [
+    BotUpdate,
+    PlayerUpdate,
+    EmbedService,
+    TrackService,
+    DatabaseService,
+  ],
 })
 export class BotModule {}

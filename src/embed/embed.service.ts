@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   ChatInputCommandInteraction,
   Client,
+  ColorResolvable,
   EmbedAuthorOptions,
   EmbedBuilder,
 } from 'discord.js';
@@ -10,6 +11,11 @@ import { GuildQueue, Track, useQueue } from 'discord-player';
 @Injectable()
 export class EmbedService {
   public constructor(private readonly client: Client) {}
+
+  private readonly whiteColor: ColorResolvable = 0xf1f1f1;
+  private readonly blueColor: ColorResolvable = 0x6ea2d5;
+  private readonly greenColor: ColorResolvable = 0x0f996b;
+  private readonly redColor: ColorResolvable = 0xe32636;
 
   private getAuthor(): EmbedAuthorOptions {
     if (this.client.user) {
@@ -27,7 +33,7 @@ export class EmbedService {
 
   public currentTrack(track: Track): EmbedBuilder {
     return new EmbedBuilder()
-      .setColor(0x6ea2d5)
+      .setColor(this.blueColor)
       .setTitle('Сейчас играет: ')
       .setDescription(
         `${track.source !== 'arbitrary' ? track.toHyperlink() : track.title.replace(/\.[^/.]+$/, '')}\n\n⏲Длительность: ${track.duration}`,
@@ -40,7 +46,7 @@ export class EmbedService {
   public queue(track: Track, interaction: ChatInputCommandInteraction) {
     const queue: GuildQueue | null = useQueue(interaction.guild?.id as string);
     return new EmbedBuilder()
-      .setColor(0x0f996b)
+      .setColor(this.greenColor)
       .setTitle(
         track.source !== 'arbitrary'
           ? track.title
@@ -61,7 +67,7 @@ export class EmbedService {
 
   public queueList(queueList: Track[]): EmbedBuilder {
     return new EmbedBuilder()
-      .setColor(0xf1f1f1)
+      .setColor(this.whiteColor)
       .setTitle('Список очереди:')
       .setDescription(
         queueList
@@ -77,14 +83,14 @@ export class EmbedService {
 
   public error(error: string): EmbedBuilder {
     return new EmbedBuilder()
-      .setColor(0xe32636)
+      .setColor(this.redColor)
       .setTitle('Произошла ошибка😓')
       .setDescription(error);
   }
 
   public info(title: string, text?: string): EmbedBuilder {
     return new EmbedBuilder()
-      .setColor(0xf1f1f1)
+      .setColor(this.whiteColor)
       .setTitle(title)
       .setDescription(text ? text : null)
       .setAuthor(this.getAuthor());

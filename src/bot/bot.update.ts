@@ -3,6 +3,7 @@ import { Client } from 'discord.js';
 import { Context, ContextOf, On, Once } from 'necord';
 import { Player } from 'discord-player';
 import { PlayerUpdate } from '../player/player.update';
+import { TrackService } from '../track/track.service';
 
 @Injectable()
 export class BotUpdate {
@@ -11,15 +12,12 @@ export class BotUpdate {
   public constructor(
     private readonly client: Client,
     private readonly playerUpdate: PlayerUpdate,
+    private readonly trackService: TrackService,
   ) {}
 
   @Once('ready')
   public async onReady(@Context() [client]: ContextOf<'ready'>) {
     this.logger.log(`Bot logged in as ${client.user.tag}!`);
-    // this.botInfo = {
-    //   name: client.user.displayName,
-    //   iconURL: client.user.displayAvatarURL(),
-    // };
 
     const player: Player = new Player(client, {
       skipFFmpeg: false,
@@ -31,6 +29,7 @@ export class BotUpdate {
     });
     await player.extractors.loadDefault();
 
+    await this.trackService.initTracks();
     this.playerUpdate.start();
   }
 

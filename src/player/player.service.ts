@@ -127,4 +127,21 @@ export class PlayerService {
       return new CommandResponseDto('Очередь пуста');
     }
   }
+
+  public async bassboost(
+    interaction: ChatInputCommandInteraction,
+  ): Promise<CommandResponseDto> {
+    const queue: GuildQueue = useQueue(interaction.guild.id);
+
+    await queue?.filters.ffmpeg.toggle(['bassboost_low']);
+
+    if (queue?.filters.ffmpeg.getFiltersEnabled().includes('bassboost_low')) {
+      queue?.filters.volume.setVolume(1000);
+      return new CommandResponseDto('Включён режим бассбуста');
+    }
+
+    queue?.filters.volume.setVolume(100);
+
+    return new CommandResponseDto('Выключён режим бассбуста');
+  }
 }

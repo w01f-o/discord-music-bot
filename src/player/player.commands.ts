@@ -145,4 +145,23 @@ export class PlayerCommands {
       return this.error(interaction, e);
     }
   }
+
+  @SlashCommand({
+    name: 'bassboost',
+    description: 'Включить/выключить режим бассбуста',
+    guilds: [getBotConfig().discord_dev_guild],
+  })
+  public async onBassboost(@Context() [interaction]: SlashCommandContext) {
+    await interaction.deferReply();
+
+    try {
+      const { response } = await this.playerService.bassboost(interaction);
+
+      return await interaction.followUp({
+        embeds: [this.embedService.info(response)],
+      });
+    } catch (e) {
+      return this.error(interaction, e);
+    }
+  }
 }
