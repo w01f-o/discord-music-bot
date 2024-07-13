@@ -12,10 +12,17 @@ import { GuildQueue, Track, useQueue } from 'discord-player';
 export class EmbedService {
   public constructor(private readonly client: Client) {}
 
-  private readonly whiteColor: ColorResolvable = 0xf1f1f1;
-  private readonly blueColor: ColorResolvable = 0x6ea2d5;
-  private readonly greenColor: ColorResolvable = 0x0f996b;
-  private readonly redColor: ColorResolvable = 0xe32636;
+  private readonly colors: {
+    white: ColorResolvable;
+    blue: ColorResolvable;
+    green: ColorResolvable;
+    red: ColorResolvable;
+  } = {
+    white: 0xf1f1f1,
+    blue: 0x6ea2d5,
+    green: 0x0f996b,
+    red: 0xe32636,
+  };
 
   private getAuthor(): EmbedAuthorOptions {
     if (this.client.user) {
@@ -24,7 +31,7 @@ export class EmbedService {
         iconURL: this.client.user.displayAvatarURL(),
       };
     }
-
+    console.log(this.colors.white);
     return {
       name: 'Music bot',
       iconURL: 'https://i.imgur.com/1tfsB88.png',
@@ -33,7 +40,7 @@ export class EmbedService {
 
   public currentTrack(track: Track): EmbedBuilder {
     return new EmbedBuilder()
-      .setColor(this.blueColor)
+      .setColor(this.colors.blue)
       .setTitle('Сейчас играет: ')
       .setDescription(
         `${track.source !== 'arbitrary' ? track.toHyperlink() : track.title.replace(/\.[^/.]+$/, '')}\n\n⏲Длительность: ${track.duration}`,
@@ -46,7 +53,7 @@ export class EmbedService {
   public queue(track: Track, interaction: ChatInputCommandInteraction) {
     const queue: GuildQueue | null = useQueue(interaction.guild?.id as string);
     return new EmbedBuilder()
-      .setColor(this.greenColor)
+      .setColor(this.colors.green)
       .setTitle(
         track.source !== 'arbitrary'
           ? track.title
@@ -67,7 +74,7 @@ export class EmbedService {
 
   public queueList(queueList: Track[]): EmbedBuilder {
     return new EmbedBuilder()
-      .setColor(this.whiteColor)
+      .setColor(this.colors.white)
       .setTitle('Список очереди:')
       .setDescription(
         queueList
@@ -83,14 +90,14 @@ export class EmbedService {
 
   public error(error: string): EmbedBuilder {
     return new EmbedBuilder()
-      .setColor(this.redColor)
+      .setColor(this.colors.red)
       .setTitle('Произошла ошибка😓')
       .setDescription(error);
   }
 
   public info(title: string, text?: string): EmbedBuilder {
     return new EmbedBuilder()
-      .setColor(this.whiteColor)
+      .setColor(this.colors.white)
       .setTitle(title)
       .setDescription(text ? text : null)
       .setAuthor(this.getAuthor());
