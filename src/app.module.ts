@@ -11,6 +11,7 @@ import * as path from 'node:path';
   imports: [
     ServeStaticModule.forRoot({
       rootPath: path.resolve('audio'),
+      serveRoot: '/ds_bot',
     }),
     BotModule,
     PlayerModule,
