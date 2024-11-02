@@ -22,7 +22,7 @@ export class PlayerService {
   ): Promise<Track | CommandResponseDto> {
     const member = interaction.member as GuildMember;
     const voiceChannel = member.voice.channel;
-    console.log(voiceChannel);
+
     if (!voiceChannel) {
       return new CommandResponseDto(
         'Вы должны находиться в голосовом канале, чтобы я смог к вам зайти',
@@ -30,7 +30,7 @@ export class PlayerService {
     }
 
     const player: Player = useMainPlayer();
-    console.log(player);
+
     const result = await player.play(voiceChannel, requestedTrack, {
       nodeOptions: {
         metadata: interaction,
