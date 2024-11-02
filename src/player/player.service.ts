@@ -22,7 +22,7 @@ export class PlayerService {
   ): Promise<Track | CommandResponseDto> {
     const member = interaction.member as GuildMember;
     const voiceChannel = member.voice.channel;
-
+    console.log(voiceChannel);
     if (!voiceChannel) {
       return new CommandResponseDto(
         'Вы должны находиться в голосовом канале, чтобы я смог к вам зайти',
@@ -30,8 +30,8 @@ export class PlayerService {
     }
 
     const player: Player = useMainPlayer();
-
-    const { track } = await player.play(voiceChannel, requestedTrack, {
+    console.log(player);
+    const result = await player.play(voiceChannel, requestedTrack, {
       nodeOptions: {
         metadata: interaction,
         leaveOnEmpty: true,
@@ -41,8 +41,9 @@ export class PlayerService {
       },
       searchEngine: isLocalTrack ? QueryType.FILE : QueryType.AUTO,
     });
+    console.log(result);
 
-    return track;
+    return result.track;
   }
 
   public pause(interaction: ChatInputCommandInteraction): CommandResponseDto {
@@ -92,7 +93,7 @@ export class PlayerService {
       queue?.node.skip();
     }
 
-    return new CommandResponseDto('Включён предыдущий трек' as string);
+    return new CommandResponseDto('Включён предыдущий трек');
   }
 
   public loop(
